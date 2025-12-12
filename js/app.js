@@ -7,11 +7,14 @@ let tweets = [];
 
 eventListeners();
 function eventListeners () {
-
+    Formulario.addEventListener('submit', addTweet);
 }
 
 
 // Funciones
 
-localStorage.setItem("nombre", "Juan");
+function addTweet (e) {
+    e.preventDefault();
 
+    console.log("Agregando tweet...");
+}
