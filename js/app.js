@@ -7,7 +7,17 @@ let tweets = [];
 
 eventListeners();
 function eventListeners () {
+
+    // cuando el usuairo agrega
     Formulario.addEventListener('submit', addTweet);
+
+    // cuando el documento esta listo 
+
+    document.addEventListener ( 'DOMContentLoaded', () => {
+        tweets = JSON.parse( localStorage.getItem('tweets') ) || [];
+
+        crearHtml();
+    })
 }
 
 
@@ -35,6 +45,9 @@ function addTweet (e) {
     console.log(tweets);
 
     crearHtml();
+
+    // reiniciar el formulario
+    Formulario.reset();
 }
 
 function mostrarError (error) {
@@ -57,26 +70,32 @@ function mostrarError (error) {
 function crearHtml () {
 
     limpiarHtml();
-    
+
     if ( tweets.length > 0 ) {
         tweets.forEach ( tweet => {
             const li = document.createElement('li');
 
             // Añadir texto
             li.innerText = tweet.tweet;
-
+            
+            // agregarlo a la lista de tweets
             ListaTweets.appendChild(li);
         })  
 
-        // agregarlo a la lista de tweets
 
     }
+     // Agregar a local storage
+    sincronizarStorage();
+}
+
+function sincronizarStorage () {
+    localStorage.setItem('tweets', JSON.stringify(tweets));
 }
 
 // limpiar Html
-
 function limpiarHtml () {
     while (ListaTweets.firstChild) {
         ListaTweets.removeChild(ListaTweets.firstChild);
     }   
 }   
+
