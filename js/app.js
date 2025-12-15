@@ -73,11 +73,24 @@ function crearHtml () {
 
     if ( tweets.length > 0 ) {
         tweets.forEach ( tweet => {
+            // Creat btn
+            const btnEliminar = document.createElement('a');
+            btnEliminar.classList = 'borrar-tweet';
+            btnEliminar.innerText = 'X';
+
+            // añadir la function Eliminar
+            btnEliminar.onclick = () => {
+                borrarTweet(tweet.id);  
+            }
+
+
             const li = document.createElement('li');
 
             // Añadir texto
             li.innerText = tweet.tweet;
             
+            // asignar Btn
+            li.appendChild(btnEliminar);
             // agregarlo a la lista de tweets
             ListaTweets.appendChild(li);
         })  
@@ -90,6 +103,13 @@ function crearHtml () {
 
 function sincronizarStorage () {
     localStorage.setItem('tweets', JSON.stringify(tweets));
+}
+
+// Borrar tweet
+
+function borrarTweet (id) {
+    tweets = tweets.filter( tweet => tweet.id !== id);
+    crearHtml();
 }
 
 // limpiar Html
